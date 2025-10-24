@@ -1,4 +1,4 @@
-alias tmexit='rm ~/.closebash && exit'
+moualias tmexit='rm ~/.closebash && exit'
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ -z "$TERM_PROGRAM" ]; then
             # exec tmux  #will always close terminal on a detach
             #tmux  #will exit to bash prompt
@@ -101,10 +101,14 @@ CYAN='\[\033[1;36m\]'
 NC='\[\033[0m\]'
 
 
-
+# in ps1 capital w is the full path
 PS1="$GREEN\u$WHITE:$BLUE\w$ $NC"
 if [[ "$TERM" != screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
     PROMPT_COMMAND="$PROMPT_COMMAND"
 else
     PROMPT_COMMAND="find_git_repo; $PROMPT_COMMAND"
 fi
+
+xinput set-button-map "MSFT0001:01 04F3:3140 Mouse" 1 1 3 4 5 6 7
+#xinput get-button-map "MSFT0001:01 04F3:3140 Touchpad"
+xinput set-button-map "MSFT0001:01 04F3:3140 Touchpad"1 1 3 4 5 6 7
