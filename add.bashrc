@@ -65,6 +65,11 @@ find_git_branch() {
     fi
 }
 
+startpydev() {
+    source .venv/bin/activate
+}
+
+
 # Taken from https://github.com/jimeh/git-aware-prompt
 find_git_dirty() {
   local status=$(git status --porcelain 2> /dev/null)
@@ -109,6 +114,10 @@ else
     PROMPT_COMMAND="find_git_repo; $PROMPT_COMMAND"
 fi
 
-xinput set-button-map "MSFT0001:01 04F3:3140 Mouse" 1 1 3 4 5 6 7
-#xinput get-button-map "MSFT0001:01 04F3:3140 Touchpad"
-xinput set-button-map "MSFT0001:01 04F3:3140 Touchpad" 1 1 3 4 5 6 7
+hostn=$(uname -n)
+
+if [[ "$hostn" == "ideapadnamegoeshere" ]]; then
+    xinput set-button-map "MSFT0001:01 04F3:3140 Mouse" 1 1 3 4 5 6 7
+    #xinput get-button-map "MSFT0001:01 04F3:3140 Touchpad"
+    xinput set-button-map "MSFT0001:01 04F3:3140 Touchpad" 1 1 3 4 5 6 7
+fi
