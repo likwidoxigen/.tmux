@@ -1,21 +1,53 @@
 tmexit() {
     if [ -n "$TMUX" ]; then
-        touch ~/.closebash
+        # Get the name of the session we need to kill
+        CURRENT_SESSION=$(tmux display-message -p '#S')
+        # Detach client so that we can use a custom exit code to remain in shell
+        tmux detach-client -P -E "exit 100"
+        # Now kill the session so it doesn't hang around
+        tmux kill-session -t "$CURRENT_SESSION"
+    else
+        exit
     fi
-    exit
+}
+tmsave() {
+    if [ -n "$TMUX" ]; then
+        tmux detach-client -P -E "exit 100"
+    else
+        exit
+    fi
 }
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ -z "$TERM_PROGRAM" ]; then
             # exec tmux  #will always close terminal on a detach
             #tmux  #will exit to bash prompt
         tmux #alternate way to close base shell on exit
-        #Just set a session variable rather than write a file ya dummy
-        if [ -f ~/.closebash ]; then
+        if [ $? -eq 100 ]; then
             echo "Remaining In terminal"
-            rm ~/.closebash
         else
             exit
         fi
 fi
+
+
+# Works but dummy method with using a file
+# tmexit() {
+#     if [ -n "$TMUX" ]; then
+#         touch ~/.closebash
+#     fi
+#     exit
+# }
+# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ -z "$TERM_PROGRAM" ]; then
+#             # exec tmux  #will always close terminal on a detach
+#             #tmux  #will exit to bash prompt
+#         tmux #alternate way to close base shell on exit
+#         #Just set a session variable rather than write a file ya dummy
+#         if [ -f ~/.closebash ]; then
+#             echo "Remaining In terminal"
+#             rm ~/.closebash
+#         else
+#             exit
+#         fi
+# fi
 
 GIT_BRANCH_SYMBOL='⌥'
 # Taken from http://aaroncrane.co.uk/2009/03/git_branch_prompt/
