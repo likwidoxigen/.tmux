@@ -1,12 +1,17 @@
-alias tmexit='rm ~/.closebash && exit'
+tmexit() {
+    if [ -n "$TMUX" ]; then
+        touch ~/.closebash
+    fi
+    exit
+}
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ -z "$TERM_PROGRAM" ]; then
             # exec tmux  #will always close terminal on a detach
             #tmux  #will exit to bash prompt
         tmux #alternate way to close base shell on exit
         #Just set a session variable rather than write a file ya dummy
-        if [ ! -f ~/.closebash ]; then
+        if [ -f ~/.closebash ]; then
             echo "Remaining In terminal"
-            echo "close" > ~/.closebash 
+            rm ~/.closebash
         else
             exit
         fi
