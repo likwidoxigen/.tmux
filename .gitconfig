@@ -1,0 +1,16 @@
+[user]
+    name = Bryce Leo
+    email = bryce@bryceleo.com
+[alias]
+    lga = log --graph --oneline --decorate --all
+    lgamaster = lga master..
+    lgamain = lga main..
+    rpull = pull --rebase
+    co = checkout
+    b = branch
+    ci = commit
+    st = status
+    rename = branch -m
+    rn = rename
+    in = "init --initial-branch=main"
+    age = for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
